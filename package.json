@@ -1,0 +1,20 @@
+{
+  "name": "Udemy-Javascript",
+  "version": "1.0.0",
+  "description": "The Complete JavaScript Course 2020: Build Real Projects! Master JavaScript with the most complete course! Projects, challenges, quizzes, JavaScript ES6+, OOP, AJAX, Webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshitijzutshi/Udemy-Javascript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kshitijzutshi/Udemy-Javascript/issues"
+  },
+  "homepage": "https://github.com/kshitijzutshi/Udemy-Javascript#readme"
+}

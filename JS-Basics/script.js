@@ -121,7 +121,7 @@ var drink = age >= 18 ? 'beer' : 'juice';
 console.log(drink);
 
 
-// Switch 
+Switch 
 
 var job = prompt('Enter type of job');
 switch(job){
