@@ -170,3 +170,25 @@ if(height === '23'){
 if(height == '23'){
     console.log(' the == operator does type cooercion!');
 }
+
+/************************* 
+ * Functions
+ * 
+*/
+
+function calculateAge(birthYear){
+    
+    return 2018-birthYear;
+}
+
+// console.log('The Age is  '+ calculateAge(1990));
+
+function yearsUntilRetirement(year,firstName) {
+
+    var age = calculateAge(year);
+    var retirement = 65 - age;
+    // A function need not always return something
+    console.log(firstName + ' retires in '+ retirement + ' years. ');
+}
+
+yearsUntilRetirement(1990,'John');
