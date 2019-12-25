@@ -33,7 +33,8 @@ console.log(firstName +' is a '+job + ' and is he married? ' + isMarried);
 // age that was integer is now a string
 age = 'twenty eight';
 // alert(age);
-var lastName = prompt('What is his last name?');
+// var lastName = prompt('What is his last name?');
+var lastName = 'Smith';
 console.log(firstName + ' ' + lastName);
 
 
@@ -43,7 +44,7 @@ console.log(firstName + ' ' + lastName);
 
 var yearJohn = 2019 - 28;
 
-alert(yearJohn);
+// alert(yearJohn);
 
 // Logical oerators
 
@@ -121,9 +122,10 @@ var drink = age >= 18 ? 'beer' : 'juice';
 console.log(drink);
 
 
-Switch 
+// Switch 
 
-var job = prompt('Enter type of job');
+// var job = prompt('Enter type of job');
+var job = 'teacher';
 switch(job){
     case 'teacher':
         console.log('teaches kids');
@@ -137,4 +139,34 @@ switch(job){
     default:
         console.log('does something else');
 
+}
+
+
+// Truthy and Falsy values
+
+// Falsy values are : undefined, null, 0, '' , NaN
+
+// Truthy values : all values that are not falsy in say If else ladder
+
+// Equality operators 
+
+var height;
+
+height = 23;
+
+if(height || height === 0){
+    console.log('VAriable is defined');
+}
+else{
+    console.log('Variable has NOT been defined');
+}
+
+// THE == OPERATOR DOES NOT DO TYPE COERCION BUT THE === DOES
+
+if(height === '23'){
+    console.log(' the === operator does not do type cooercion!');
+}
+
+if(height == '23'){
+    console.log(' the == operator does type cooercion!');
 }
