@@ -155,7 +155,7 @@ var height;
 height = 23;
 
 if(height || height === 0){
-    console.log('VAriable is defined');
+    console.log('Variable is defined');
 }
 else{
     console.log('Variable has NOT been defined');
@@ -164,11 +164,11 @@ else{
 // THE == OPERATOR DOES NOT DO TYPE COERCION BUT THE === DOES
 
 if(height === '23'){
-    console.log(' the === operator does not do type cooercion!');
+    console.log('The === operator does not do type cooercion!');
 }
 
 if(height == '23'){
-    console.log(' the == operator does type cooercion!');
+    console.log('The == operator does type cooercion!');
 }
 
 /************************* 
@@ -198,3 +198,36 @@ function yearsUntilRetirement(year,firstName) {
 }
 
 yearsUntilRetirement(1948,'John');
+
+/*********************************
+ * Function Statements and Expressions
+ * 
+ * 
+ */
+
+// Function Declaration
+
+// function whatDoYouDo(job,firstName){}
+
+
+// Function Expression 
+var whatDoYouDo = function (job, firstName){
+
+    switch(job){
+        case 'teacher':
+            // IF WE USE RETURN THEN BREAK NOT REQUIRED AS IT EXISTS THE FUNCTION
+            return firstName + ' teaches kids.';
+
+        case 'driver':
+            return firstName + ' drives Uber.';
+
+        case 'designer':
+            return firstName + ' designs websites.';
+        
+        default:
+            return firstName + ' does something else.';
+
+    }
+}
+
+console.log(whatDoYouDo('teacher', 'John'));
