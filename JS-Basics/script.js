@@ -231,3 +231,21 @@ var whatDoYouDo = function (job, firstName){
 }
 
 console.log(whatDoYouDo('teacher', 'John'));
+
+
+/**********************************
+*   Objects and properties
+*
+*/
+
+var obj1 = {
+        firstName: 'John',
+        lastName: 'Smith',
+        birthYear: 1990,
+        family: ['Jane','Mark','Bob','Emily'],
+        job: 'teacher',
+        isMarried: false
+};
+
+console.log(obj1.firstName);
+
