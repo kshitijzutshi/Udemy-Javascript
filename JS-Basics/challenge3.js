@@ -12,19 +12,20 @@ function tipCalculator(amount){
     }
 }
 
-var tipAmount1 = tipCalculator(124);
-var tipAmount2 = tipCalculator(48);
-var tipAmount3 = tipCalculator(268);
+// var tipAmount1 = tipCalculator(124);
+// var tipAmount2 = tipCalculator(48);
+// var tipAmount3 = tipCalculator(268);
 
-var tipArray = [];
-var amountArray = [];
+var bill = [124,48,268];
+var tipArray = [tipCalculator(bill[0]), tipCalculator(bill[1]), tipCalculator(bill[2])];
+var amountArray = [(bill[0]+tipArray[0]), (bill[1]+tipArray[1]), (bill[2]+tipArray[2])];
 
-tipArray.push(tipAmount1);
-tipArray.push(tipAmount2);
-tipArray.push(tipAmount3);
+// tipArray.push(tipAmount1);
+// tipArray.push(tipAmount2);
+// tipArray.push(tipAmount3);
 console.log('Tips for all bills are: '+tipArray);
 
-amountArray.push((124 + tipAmount1));
-amountArray.push((48 + tipAmount2));
-amountArray.push((268 + tipAmount3));
+// amountArray.push((124 + tipAmount1));
+// amountArray.push((48 + tipAmount2));
+// amountArray.push((268 + tipAmount3));
 console.log('Final paid amounts are: '+amountArray);
