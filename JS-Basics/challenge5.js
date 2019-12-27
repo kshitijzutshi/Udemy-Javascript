@@ -49,19 +49,19 @@ var billObject ={
 
 
             for(var j = 0; j < this.tipJohn.length; j++){
-                sumTipJohn = sumTipJohn + this.tipJohn[i];
+                sumTipJohn = sumTipJohn + this.tipJohn[j];
                 
             }
             this.tipAvgJohn = sumTipJohn/this.tipJohn.length;
-            return this.tipAvgJohn;
+            
             
             
             for(var j = 0; j < this.tipMark.length; j++){
-                sumTipMark = sumTipMark + this.tipMark[i];
+                sumTipMark = sumTipMark + this.tipMark[j];
                 
             }
             this.tipAvgMark = sumTipMark/this.tipMark.length;
-            return this.tipAvgMark;
+
 
         }
         
@@ -75,6 +75,7 @@ billObject.calcTipAvg();
 
 console.log('John\'s tip array: '+billObject.tipJohn);
 console.log('Mark\'s tip array: '+billObject.tipMark);
+console.log('Mark\'s final array: '+billObject.finalAmountMark);
 
 console.log('John\'s average tip array: '+billObject.tipAvgJohn);
 console.log('Mark\'s average tip array: '+billObject.tipAvgMark);
@@ -83,7 +84,7 @@ if(billObject.tipAvgJohn > billObject.tipAvgMark){
     console.log('John\'s family paid highest tips on average.');
 }
 else{
-    console.log('Mark\'s family paid highest tips on average,'+ 'with average of $'+billObject.tipAvgMark);
+    console.log('Mark\'s family paid highest tips on average,'+ 'with average of $'+ billObject.tipAvgMark);
 }
 
 console.log(billObject);
