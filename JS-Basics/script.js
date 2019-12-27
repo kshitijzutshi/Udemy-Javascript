@@ -292,3 +292,53 @@ var obj1 = {
 obj1.calcAge();
 console.log(obj1);
 // console.log(obj1.calcAge(1990));
+
+
+/*******************************************
+*
+*   Loops and Iteration
+*
+*/
+
+// FOR loop
+
+for(var i = 0; i < 10; i+=2){
+    console.log('Number '+(i));
+}
+
+var john = ['John', 'Smith', 1990, 'designer', false];
+for(var i = 0; i < john.length; i++){
+    console.log(john[i]);
+}
+
+// WHILE Loops
+var i = 0;
+while(i<john.length){
+    console.log(john[i]);
+    ++i;
+}
+
+
+// CONTINUE and BREAK Statements
+
+var john = ['John', 'Smith', 1990, 'designer', false];
+for(var i = 0; i < john.length; i++){
+    if(typeof john[i] !== 'string')
+    continue;
+    console.log(john[i]);
+}
+
+// BREAKS out of the loop on getting 1990 so nothing printed after that
+var john = ['John', 'Smith', 1990, 'designer', false];
+for(var i = 0; i < john.length; i++){
+    if(typeof john[i] !== 'string')
+    break;
+    console.log(john[i]);
+}
+
+// Printing the array backwards
+
+var john = ['John', 'Smith', 1990, 'designer', false, true];
+for(var i = john.length-1; i >= 0; i--){
+    console.log(john[i]);
+}
