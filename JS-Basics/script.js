@@ -260,3 +260,35 @@ console.log(obj1[x]);
 obj1.job = 'designer';
 obj1['isMarried'] = true;
 console.log(obj1);
+
+
+/*****************************************
+*   Objects and Methods
+*
+*/
+
+var obj1 = {
+        firstName: 'John',
+        lastName: 'Smith',
+        birthYear: 1990,
+        family: ['Jane','Mark','Bob','Emily'],
+        job: 'teacher',
+        isMarried: false,
+        // Addding function here to calculate age
+//         calcAge: function(birthYear){
+//             return 2019 - birthYear;
+//         }
+
+//      USING THIS KEYWORD -> current object
+//         calcAge: function(){
+//             return 2019 - this.birthYear;
+//         }
+        calcAge: function(){
+                    this.age = 2019 - this.birthYear;
+                }
+};
+
+// obj1.age = obj1.calcAge();
+obj1.calcAge();
+console.log(obj1);
+// console.log(obj1.calcAge(1990));
