@@ -248,4 +248,15 @@ var obj1 = {
 };
 
 console.log(obj1.firstName);
+// Another way to access the key value pair in objects 
 
+console.log(obj1['lastName']);
+
+var x = 'birthYear';
+console.log(obj1[x]);
+
+// Modifying values in objects
+
+obj1.job = 'designer';
+obj1['isMarried'] = true;
+console.log(obj1);
