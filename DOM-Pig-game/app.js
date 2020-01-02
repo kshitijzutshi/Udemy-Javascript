@@ -11,7 +11,7 @@ GAME RULES:
 
 // Scores instead of having 2 variable have an array
 
-var scores,roundScore,activePlayer,dice;
+var scores,roundScore,activePlayer;
 
 scores = [0,0];
 roundScore = 0;
@@ -24,7 +24,10 @@ activePlayer = 0;
 Math.random()*6 because Math.random() gives number in decimal between 0 and 1
 We use floor to get the integer part alone and add one coz we need numbers from 1 to 6
 ****************************/
-dice = Math.floor(Math.random()*6 + 1);
+
+// dice = Math.floor(Math.random()*6 + 1);
+
+
 
 // TO get DOM Access use document
 /* 
@@ -35,7 +38,7 @@ USE # TO SELECT THE PARTICULAR ID TAG
 
 We use the activeplayer variable to keep track of who is playing. use type coercion to attach 
 */
-document.querySelector('#current-'+ activePlayer).textContent = dice;
+// document.querySelector('#current-'+ activePlayer).textContent = dice;
 
 // inner html if you want to format the text content.
 // document.querySelector('#current-'+ activePlayer).innerHTML = '<em>'+ dice + '</em>';
@@ -55,8 +58,61 @@ and then hide it.
 
 document.querySelector('.dice').style.display = 'none';
 
-// Next, we want the dice to show when we click the roll button and
-// score should be added to current
+// We use getElementById, its faster than queryselector as we will be using the score-0,1 and current-0,1 tags
+// Set them to 0
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
 
-document.querySelector('.ion-ios-plus-outline').
 
+
+/* 
+Next, we want the dice to show when we click the roll button and
+score should be added to current -> Use Event listener
+
+https://developer.mozilla.org/en-US/docs/Web/Events
+ */
+
+
+ document.querySelector('.btn-roll')
+        .addEventListener('click', function() {
+            /* On click we need :
+            1. Random number
+            2. Display the result
+            3. Update the round score only IF rolled number !== 1
+            
+            */
+            
+            // 1. Random number generation
+            var dice = Math.floor(Math.random()*6 + 1);
+
+            // 2. Display the result
+            var diceDOM = document.querySelector('.dice');
+            diceDOM.style.display = 'block';
+
+            // Change the image src for respective random number
+            diceDOM.src = 'dice-' + dice + '.png';
+
+            // 3. Update the round score only IF rolled number !== 1
+            //    The Id's in use will be score-0, score-1, current-0, current-1
+
+})
+
+document.querySelector('.btn-hold')
+        .addEventListener('click', function() {
+            
+            if(activePlayer === 0){
+                document.getElementById('score-0').textContent = document.getElementById('score-0').textContent + document.getElementById('current-0').textContent;
+                document.getElementById('current-0').textContent = '0';
+                
+            }
+            
+            globalscore = globalscore+current;
+            current = 0;
+            activePlayer = 1;
+            else if(activePlayer === 1){
+
+            }
+            
+        })
