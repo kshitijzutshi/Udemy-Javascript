@@ -1,1 +1,1 @@
-# DOM Manupilations - Building a Pig Game
+# DOM Manipulation - Building a Pig Game
