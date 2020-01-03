@@ -11,13 +11,9 @@ GAME RULES:
 
 // Scores instead of having 2 variable have an array
 
-var scores,roundScore,activePlayer;
+var scores, roundScore, activePlayer;
 
-scores = [0,0];
-roundScore = 0;
-
-// flag to keep track of current player
-activePlayer = 0;
+init();
 
 // random number for dice
 /* *************************
@@ -26,8 +22,6 @@ We use floor to get the integer part alone and add one coz we need numbers from 
 ****************************/
 
 // dice = Math.floor(Math.random()*6 + 1);
-
-
 
 // TO get DOM Access use document
 /* 
@@ -48,25 +42,6 @@ We use the activeplayer variable to keep track of who is playing. use type coerc
 // var x = document.querySelector('#score-0').textContent;
 // console.log(x);
 
-/*
-
-So we can use the queryselector to manupilate CSS property too
-For our dice rolling, we want to hide the dice when we are not rolling it.
-DICE -> in html is identified using class. For selecting class element we use .dice
-and then hide it.
-*/
-
-document.querySelector('.dice').style.display = 'none';
-
-// We use getElementById, its faster than queryselector as we will be using the score-0,1 and current-0,1 tags
-// Set them to 0
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
-
-
-
 /* 
 Next, we want the dice to show when we click the roll button and
 score should be added to current -> Use Event listener
@@ -74,100 +49,142 @@ score should be added to current -> Use Event listener
 https://developer.mozilla.org/en-US/docs/Web/Events
  */
 
-
- document.querySelector('.btn-roll')
-        .addEventListener('click', function() {
-            /* On click we need :
+document.querySelector(".btn-roll").addEventListener("click", function() {
+  /* On click we need :
             1. Random number
             2. Display the result
             3. Update the round score only IF rolled number !== 1
             
             */
-            
-            // 1. Random number generation
-            var dice = Math.floor(Math.random()*6 + 1);
 
-            // 2. Display the result
-            var diceDOM = document.querySelector('.dice');
-            diceDOM.style.display = 'block';
+  // 1. Random number generation
+  var dice = Math.floor(Math.random() * 6 + 1);
 
-            // Change the image src for respective random number
-            diceDOM.src = 'dice-' + dice + '.png';
+  // 2. Display the result
+  var diceDOM = document.querySelector(".dice");
+  diceDOM.style.display = "block";
 
-            // 3. Update the round score only IF rolled number !== 1
-            //    The Id's in use will be score-0, score-1, current-0, current-1
-            
-            // if(dice === 1 && activePlayer === 0 ){
-            //     document.getElementById('current-0').textContent = '0';
-            //     activePlayer = 1;
-            // }
+  // Change the image src for respective random number
+  diceDOM.src = "dice-" + dice + ".png";
 
-            //      !== dosent do type coercion but != does. === dosent do , == does.
-            if(dice !== 1){
-                // Add score
-                roundScore += dice;
-                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
-            }
-            else{
-                // Call next player method
-                nextPlayer();
+  // 3. Update the round score only IF rolled number !== 1
+  //    The Id's in use will be score-0, score-1, current-0, current-1
 
-            }
+  // if(dice === 1 && activePlayer === 0 ){
+  //     document.getElementById('current-0').textContent = '0';
+  //     activePlayer = 1;
+  // }
 
+  //      !== dosent do type coercion but != does. === dosent do , == does.
+  if (dice !== 1) {
+    // Add score
+    roundScore += dice;
+    document.querySelector("#current-" + activePlayer).textContent = roundScore;
+  } else {
+    // Call next player method
+    nextPlayer();
+  }
 });
 
-document.querySelector('.btn-hold')
-        .addEventListener('click', function() {
-            /*
+document.querySelector(".btn-hold").addEventListener("click", function() {
+  /*
             1.  current becomes 0 and adds that score to global
             2.  hide the dice
             3.  toggle focus to next player
             4.  Check if player won the game
+            5.  DRY - Dont repeat yourself, use nextPlayer() function to call.            
             */
 
-            if(activePlayer === 0){
-                scores[activePlayer] += roundScore;
-                document.querySelector('#score-'+ activePlayer).textContent = scores[activePlayer];
-                roundScore = 0;
-                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+  scores[activePlayer] += roundScore;
+  document.querySelector("#score-" + activePlayer).textContent =
+    scores[activePlayer];
+  roundScore = 0;
 
-            }
-            else if (activePlayer === 1){
-                scores[activePlayer] += roundScore;
-                document.querySelector('#score-'+ activePlayer).textContent = roundScore;
-                roundScore = 0;
-                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
-            }
+  // Check if the player has WON
+  if (scores[activePlayer] >= 20) {
+    document.querySelector("#name-" + activePlayer).textContent = "WINNER!";
+    document.querySelector(".dice").style.display = "none";
+    // Add CSS to winner of player
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
 
+    // ONCE there is a winner stop the roll dice button from working
+    document.querySelector(".btn-roll").setAttribute("disabled", true);
+  } else {
+    nextPlayer();
+  }
+});
 
-            // 2 and 3
-            document.querySelector('.player-0-panel').classList.toggle('active');
-            document.querySelector('.player-1-panel').classList.toggle('active');
-            document.querySelector('.dice').style.display = 'none';
-            
-            
-        });
+// document.querySelector(".btn-new").addEventListener("click", function() {
+//   /*
+//         Game Initialization function:
+//         1. Set all scores to zero
 
-function nextPlayer(){
-     // document.querySelector('#current-'+ activePlayer).textContent = roundScore;
-     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; 
-     roundScore = 0;
-     document.getElementById('current-0').textContent = '0';
-     document.getElementById('current-1').textContent = '0';
+//     */
+//     init();
+// });
 
-     // Now to shift focus of dot to next player, also change of the background to grey and player 1 text to be grey
-     // This is done by checking the class="player-0-panel active"
+// NO NEED OF ANONYMOUS FN IF CALLING INIT()
+document.querySelector(".btn-new").addEventListener("click", init);
 
-     // But this method only shifts once and dosent switch back to player 1, FOR THAT USE TOGGLE.
-     // document.querySelector('.player-0-panel').classList.remove('active');
-     // document.querySelector('.player-1-panel').classList.add('active');
-     
-     
-     // USING TOGGLE
-     document.querySelector('.player-0-panel').classList.toggle('active');
-     document.querySelector('.player-1-panel').classList.toggle('active');
-     document.querySelector('.dice').style.display = 'none';
-     
-     
+function init() {
+  scores = [0, 0];
+  roundScore = 0;
 
+  // flag to keep track of current player
+  activePlayer = 0;
+
+  /*
+
+So we can use the queryselector to manupilate CSS property too
+For our dice rolling, we want to hide the dice when we are not rolling it.
+DICE -> in html is identified using class. For selecting class element we use .dice
+and then hide it.
+*/
+
+  document.querySelector(".dice").style.display = "none";
+
+  // We use getElementById, its faster than queryselector as we will be using the score-0,1 and current-0,1 tags
+  // Set them to 0
+  document.getElementById("score-0").textContent = "0";
+  document.getElementById("score-1").textContent = "0";
+  document.getElementById("current-0").textContent = "0";
+  document.getElementById("current-1").textContent = "0";
+
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+
+  // Make the focus back to player 1 and make it active, remove winner classes
+
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+
+  document.querySelector(".player-0-panel").classList.add("active");
+}
+
+function nextPlayer() {
+  // document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+  roundScore = 0;
+  document.getElementById("current-0").textContent = "0";
+  document.getElementById("current-1").textContent = "0";
+
+  // Now to shift focus of dot to next player, also change of the background to grey and player 1 text to be grey
+  // This is done by checking the class="player-0-panel active"
+
+  // But this method only shifts once and dosent switch back to player 1, FOR THAT USE TOGGLE.
+  // document.querySelector('.player-0-panel').classList.remove('active');
+  // document.querySelector('.player-1-panel').classList.add('active');
+
+  // USING TOGGLE
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+  document.querySelector(".dice").style.display = "none";
 }
