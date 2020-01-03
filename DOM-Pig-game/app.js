@@ -96,23 +96,78 @@ https://developer.mozilla.org/en-US/docs/Web/Events
 
             // 3. Update the round score only IF rolled number !== 1
             //    The Id's in use will be score-0, score-1, current-0, current-1
+            
+            // if(dice === 1 && activePlayer === 0 ){
+            //     document.getElementById('current-0').textContent = '0';
+            //     activePlayer = 1;
+            // }
 
-})
+            //      !== dosent do type coercion but != does. === dosent do , == does.
+            if(dice !== 1){
+                // Add score
+                roundScore += dice;
+                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+            }
+            else{
+                // Call next player method
+                nextPlayer();
+
+            }
+
+});
 
 document.querySelector('.btn-hold')
         .addEventListener('click', function() {
-            
+            /*
+            1.  current becomes 0 and adds that score to global
+            2.  hide the dice
+            3.  toggle focus to next player
+            4.  Check if player won the game
+            */
+
             if(activePlayer === 0){
-                document.getElementById('score-0').textContent = document.getElementById('score-0').textContent + document.getElementById('current-0').textContent;
-                document.getElementById('current-0').textContent = '0';
-                
-            }
-            
-            globalscore = globalscore+current;
-            current = 0;
-            activePlayer = 1;
-            else if(activePlayer === 1){
+                scores[activePlayer] += roundScore;
+                document.querySelector('#score-'+ activePlayer).textContent = scores[activePlayer];
+                roundScore = 0;
+                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
 
             }
+            else if (activePlayer === 1){
+                scores[activePlayer] += roundScore;
+                document.querySelector('#score-'+ activePlayer).textContent = roundScore;
+                roundScore = 0;
+                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+            }
+
+
+            // 2 and 3
+            document.querySelector('.player-0-panel').classList.toggle('active');
+            document.querySelector('.player-1-panel').classList.toggle('active');
+            document.querySelector('.dice').style.display = 'none';
             
-        })
+            
+        });
+
+function nextPlayer(){
+     // document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; 
+     roundScore = 0;
+     document.getElementById('current-0').textContent = '0';
+     document.getElementById('current-1').textContent = '0';
+
+     // Now to shift focus of dot to next player, also change of the background to grey and player 1 text to be grey
+     // This is done by checking the class="player-0-panel active"
+
+     // But this method only shifts once and dosent switch back to player 1, FOR THAT USE TOGGLE.
+     // document.querySelector('.player-0-panel').classList.remove('active');
+     // document.querySelector('.player-1-panel').classList.add('active');
+     
+     
+     // USING TOGGLE
+     document.querySelector('.player-0-panel').classList.toggle('active');
+     document.querySelector('.player-1-panel').classList.toggle('active');
+     document.querySelector('.dice').style.display = 'none';
+     
+     
+
+}
