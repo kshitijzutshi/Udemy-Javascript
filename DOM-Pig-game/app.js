@@ -11,7 +11,7 @@ GAME RULES:
 
 // Scores instead of having 2 variable have an array
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 
 init();
 
@@ -50,44 +50,49 @@ https://developer.mozilla.org/en-US/docs/Web/Events
  */
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
-  /* On click we need :
+  if (gamePlaying) {
+    /* On click we need :
             1. Random number
             2. Display the result
             3. Update the round score only IF rolled number !== 1
             
             */
 
-  // 1. Random number generation
-  var dice = Math.floor(Math.random() * 6 + 1);
+    // 1. Random number generation
+    var dice = Math.floor(Math.random() * 6 + 1);
 
-  // 2. Display the result
-  var diceDOM = document.querySelector(".dice");
-  diceDOM.style.display = "block";
+    // 2. Display the result
+    var diceDOM = document.querySelector(".dice");
+    diceDOM.style.display = "block";
 
-  // Change the image src for respective random number
-  diceDOM.src = "dice-" + dice + ".png";
+    // Change the image src for respective random number
+    diceDOM.src = "dice-" + dice + ".png";
 
-  // 3. Update the round score only IF rolled number !== 1
-  //    The Id's in use will be score-0, score-1, current-0, current-1
+    // 3. Update the round score only IF rolled number !== 1
+    //    The Id's in use will be score-0, score-1, current-0, current-1
 
-  // if(dice === 1 && activePlayer === 0 ){
-  //     document.getElementById('current-0').textContent = '0';
-  //     activePlayer = 1;
-  // }
+    // if(dice === 1 && activePlayer === 0 ){
+    //     document.getElementById('current-0').textContent = '0';
+    //     activePlayer = 1;
+    // }
 
-  //      !== dosent do type coercion but != does. === dosent do , == does.
-  if (dice !== 1) {
-    // Add score
-    roundScore += dice;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-  } else {
-    // Call next player method
-    nextPlayer();
+    //      !== dosent do type coercion but != does. === dosent do , == does.
+    if (dice !== 1) {
+      // Add score
+      roundScore += dice;
+      document.querySelector(
+        "#current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      // Call next player method
+      nextPlayer();
+    }
   }
 });
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
-  /*
+  if(gamePlaying){
+    /*
             1.  current becomes 0 and adds that score to global
             2.  hide the dice
             3.  toggle focus to next player
@@ -112,11 +117,16 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       .querySelector(".player-" + activePlayer + "-panel")
       .classList.remove("active");
 
-    // ONCE there is a winner stop the roll dice button from working
-    document.querySelector(".btn-roll").setAttribute("disabled", true);
+    // ONCE there is a winner stop the roll dice button from working -- Have a state variable which will be true if playing else false
+    // document.querySelector(".btn-roll").setAttribute("disabled", true);
+    gamePlaying = false;
   } else {
     nextPlayer();
   }
+  }
+  
+  
+  
 });
 
 // document.querySelector(".btn-new").addEventListener("click", function() {
@@ -134,7 +144,7 @@ document.querySelector(".btn-new").addEventListener("click", init);
 function init() {
   scores = [0, 0];
   roundScore = 0;
-
+  gamePlaying = true;
   // flag to keep track of current player
   activePlayer = 0;
 
