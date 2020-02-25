@@ -11,7 +11,7 @@ GAME RULES:
 
 // Scores instead of having 2 variable have an array
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 
 init();
 
@@ -50,13 +50,15 @@ https://developer.mozilla.org/en-US/docs/Web/Events
  */
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
-  /* On click we need :
+  if (gamePlaying) {
+    /* On click we need :
             1. Random number
             2. Display the result
             3. Update the round score only IF rolled number !== 1
             
             */
 
+<<<<<<< HEAD
   const prevDice = dice;         
   // 1. Random number generation
   var dice = Math.floor(Math.random() * 6 + 1);
@@ -89,13 +91,45 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
   else {
     // Call next player method
     nextPlayer();
+=======
+    // 1. Random number generation
+    var dice = Math.floor(Math.random() * 6 + 1);
+
+    // 2. Display the result
+    var diceDOM = document.querySelector(".dice");
+    diceDOM.style.display = "block";
+
+    // Change the image src for respective random number
+    diceDOM.src = "dice-" + dice + ".png";
+
+    // 3. Update the round score only IF rolled number !== 1
+    //    The Id's in use will be score-0, score-1, current-0, current-1
+
+    // if(dice === 1 && activePlayer === 0 ){
+    //     document.getElementById('current-0').textContent = '0';
+    //     activePlayer = 1;
+    // }
+
+    //      !== dosent do type coercion but != does. === dosent do , == does.
+    if (dice !== 1) {
+      // Add score
+      roundScore += dice;
+      document.querySelector(
+        "#current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      // Call next player method
+      nextPlayer();
+    }
+>>>>>>> 53d3a213ffc6a11f528f2eb833584e913502cf71
   }
 });
 console.log('previous'+prevDice);
 console.log('current'+dice);
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
-  /*
+  if(gamePlaying){
+    /*
             1.  current becomes 0 and adds that score to global
             2.  hide the dice
             3.  toggle focus to next player
@@ -109,7 +143,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
   roundScore = 0;
 
   // Check if the player has WON
-  if (scores[activePlayer] >= 20) {
+  if (scores[activePlayer] >= 100) {
     document.querySelector("#name-" + activePlayer).textContent = "WINNER!";
     document.querySelector(".dice").style.display = "none";
     // Add CSS to winner of player
@@ -120,11 +154,16 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       .querySelector(".player-" + activePlayer + "-panel")
       .classList.remove("active");
 
-    // ONCE there is a winner stop the roll dice button from working
-    document.querySelector(".btn-roll").setAttribute("disabled", true);
+    // ONCE there is a winner stop the roll dice button from working -- Have a state variable which will be true if playing else false
+    // document.querySelector(".btn-roll").setAttribute("disabled", true);
+    gamePlaying = false;
   } else {
     nextPlayer();
   }
+  }
+  
+  
+  
 });
 
 // document.querySelector(".btn-new").addEventListener("click", function() {
@@ -142,7 +181,7 @@ document.querySelector(".btn-new").addEventListener("click", init);
 function init() {
   scores = [0, 0];
   roundScore = 0;
-
+  gamePlaying = true;
   // flag to keep track of current player
   activePlayer = 0;
 
