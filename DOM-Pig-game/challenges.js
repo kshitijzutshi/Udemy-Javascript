@@ -35,6 +35,7 @@ if(gamePlaying){
   prevDice = dice;
 }
 });
+// changes
 
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
