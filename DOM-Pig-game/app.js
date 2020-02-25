@@ -57,13 +57,14 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
             
             */
 
+  const prevDice = dice;         
   // 1. Random number generation
   var dice = Math.floor(Math.random() * 6 + 1);
 
   // 2. Display the result
   var diceDOM = document.querySelector(".dice");
   diceDOM.style.display = "block";
-
+  
   // Change the image src for respective random number
   diceDOM.src = "dice-" + dice + ".png";
 
@@ -80,11 +81,18 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     // Add score
     roundScore += dice;
     document.querySelector("#current-" + activePlayer).textContent = roundScore;
-  } else {
+  } 
+  else if(dice === 6 && prevDice === 6){
+    roundScore = 0;
+    document.querySelector("#current-" + activePlayer).textContent = roundScore;
+  }
+  else {
     // Call next player method
     nextPlayer();
   }
 });
+console.log('previous'+prevDice);
+console.log('current'+dice);
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
   /*

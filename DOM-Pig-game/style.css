@@ -140,6 +140,7 @@ i {
 .btn-new { top: 45px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
+.winner-score { top: 500;}
 
 .dice {
     position: absolute;
