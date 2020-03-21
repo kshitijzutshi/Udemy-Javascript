@@ -1,4 +1,14 @@
 /*
+
+Challenge 3 : Add another dice to the game, so that there are two dices now. The player looses 
+his current score when one of the dices is 1. (Hint: You need CSS to position the second dice, so take a look at the css code).
+
+
+
+*/
+
+
+/*
 GAME RULES:
 
 - The game has 2 players, playing in rounds
@@ -61,16 +71,21 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
          
   // 1. Random number generation
-  var dice = Math.floor(Math.random() * 6 + 1);
+  var dice1 = Math.floor(Math.random() * 6 + 1);
+  var dice2 = Math.floor(Math.random() * 6 + 1);
   // Add the random function for 2nd dice
 
 
   // 2. Display the result
-  var diceDOM = document.querySelector(".dice");
-  diceDOM.style.display = "block";
+  // since we have new dices we can use element query selector
+  document.getElementById('dice-1').style.display = 'block';
+  document.getElementById('dice-2').style.display = 'block';
+
+ 
   
   // Change the image src for respective random number
-  diceDOM.src = "dice-" + dice + ".png";
+  document.getElementById('dice-1').src = "dice-" + dice1 + ".png";
+  document.getElementById('dice-2').src = "dice-" + dice2 + ".png";
 
   // 3. Update the round score only IF rolled number !== 1
   //    The Id's in use will be score-0, score-1, current-0, current-1
@@ -81,21 +96,21 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
   // }
 
   //      !== dosent do type coercion but != does. === dosent do , == does.
-  if (dice !== 1) {
+  if (dice1 !== 1 && dice2 !==1) {
     // Add score
-    roundScore += dice;
+    roundScore += dice1 + dice2;
     document.querySelector("#current-" + activePlayer).textContent = roundScore;
   } 
-  else if(dice === 6 && prevDice === 6){
-    roundScore = 0;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-    nextPlayer();
-  }
+//   else if(dice === 6 && prevDice === 6){
+//     roundScore = 0;
+//     document.querySelector("#current-" + activePlayer).textContent = roundScore;
+//     nextPlayer();
+//   }
   else {
     // Call next player method
     nextPlayer();
   }
-prevDice = dice;
+// prevDice = dice;
 
 }
 });
@@ -131,7 +146,8 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
      // Check if the player has WON
      if (scores[activePlayer] >= winningscore) {
       document.querySelector("#name-" + activePlayer).textContent = "WINNER!";
-      document.querySelector(".dice").style.display = "none";
+      document.getElementById('dice-1').style.display = 'none';
+      document.getElementById('dice-2').style.display = 'none';
       // Add CSS to winner of player
       document
         .querySelector(".player-" + activePlayer + "-panel")
@@ -165,11 +181,13 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
 // NO NEED OF ANONYMOUS FN IF CALLING INIT()
 document.querySelector(".btn-new").addEventListener("click", init);
 
+
 function init() {
   scores = [0, 0];
   roundScore = 0;
   gamePlaying = true;
   // flag to keep track of current player
+  
   activePlayer = 0;
 
   /*
@@ -180,7 +198,9 @@ DICE -> in html is identified using class. For selecting class element we use .d
 and then hide it.
 */
 
-  document.querySelector(".dice").style.display = "none";
+document.getElementById('dice-1').style.display = 'none';
+document.getElementById('dice-2').style.display = 'none';
+
 
   // We use getElementById, its faster than queryselector as we will be using the score-0,1 and current-0,1 tags
   // Set them to 0
@@ -220,5 +240,6 @@ function nextPlayer() {
   // USING TOGGLE
   document.querySelector(".player-0-panel").classList.toggle("active");
   document.querySelector(".player-1-panel").classList.toggle("active");
-  document.querySelector(".dice").style.display = "none";
+  document.getElementById('dice-1').style.display = 'none';
+  document.getElementById('dice-2').style.display = 'none';
 }
