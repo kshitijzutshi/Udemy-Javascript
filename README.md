@@ -27,4 +27,4 @@ The Complete JavaScript Course 2020: Build Real Projects! Master JavaScript with
 
     1. Prototype and Prototype chainings
     
-    ![alt text](https://github.com/kshitijzutshi/Udemy-Javascript/blob/master/prototypeChaining.PNG)
+   ![alt text](https://github.com/kshitijzutshi/Udemy-Javascript/blob/master/prototypeChaining.PNG)
