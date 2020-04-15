@@ -50,7 +50,7 @@ https://developer.mozilla.org/en-US/docs/Web/Events
  */
 var prevDice;
 
-document.querySelector(".btn-roll").addEventListener("click", function() {
+document.querySelector(".btn-roll").addEventListener("click", function () {
   if (gamePlaying) {
     /* On click we need :
             1. Random number
@@ -59,49 +59,53 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
             
             */
 
-         
-  // 1. Random number generation
-  var dice = Math.floor(Math.random() * 6 + 1);
+    // 1. Random number generation
+    var dice1 = Math.floor(Math.random() * 6 + 1);
+    var dice2 = Math.floor(Math.random() * 6 + 1);
 
-  // 2. Display the result
-  var diceDOM = document.querySelector(".dice");
-  diceDOM.style.display = "block";
-  
-  // Change the image src for respective random number
-  diceDOM.src = "dice-" + dice + ".png";
+    // 2. Display the result For challenge as we need 2 dices we use getElementById method.
 
-  // 3. Update the round score only IF rolled number !== 1
-  //    The Id's in use will be score-0, score-1, current-0, current-1
+    // var diceDOM = document.querySelector(".dice");
+    // diceDOM.style.display = "block";
+    showDice();
+    // Change the image src for respective random number
+    document.getElementById("dice-1").src = "dice-" + dice1 + ".png";
+    document.getElementById("dice-2").src = "dice-" + dice2 + ".png";
 
-  // if(dice === 1 && activePlayer === 0 ){
-  //     document.getElementById('current-0').textContent = '0';
-  //     activePlayer = 1;
-  // }
+    // 3. Update the round score only IF rolled number !== 1
+    //    The Id's in use will be score-0, score-1, current-0, current-1
 
-  //      !== dosent do type coercion but != does. === dosent do , == does.
-  if (dice !== 1) {
-    // Add score
-    roundScore += dice;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-  } 
-  else if(dice === 6 && prevDice === 6){
-    roundScore = 0;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-    nextPlayer();
+    // if(dice === 1 && activePlayer === 0 ){
+    //     document.getElementById('current-0').textContent = '0';
+    //     activePlayer = 1;
+    // }
+
+    //      !== dosent do type coercion but != does. === dosent do , == does.
+    if (dice1 !== 1 && dice2 !== 1) {
+      // Add score
+      roundScore += dice1 + dice2;
+      document.querySelector(
+        "#current-" + activePlayer
+      ).textContent = roundScore;
+      // } else if (dice === 6 && prevDice === 6) {
+      //   roundScore = 0;
+      //   document.querySelector(
+      //     "#current-" + activePlayer
+      //   ).textContent = roundScore;
+      //   nextPlayer();
+    } else {
+      // Call next player method
+      nextPlayer();
+    }
+    // prevDice = dice;
   }
-  else {
-    // Call next player method
-    nextPlayer();
-  }
-prevDice = dice;
-}
 });
 
 // console.log('previous'+prevDice);
 // console.log('current'+dice);
 
-document.querySelector(".btn-hold").addEventListener("click", function() {
-  if(gamePlaying){
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  if (gamePlaying) {
     /*
             1.  current becomes 0 and adds that score to global
             2.  hide the dice
@@ -110,32 +114,41 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
             5.  DRY - Dont repeat yourself, use nextPlayer() function to call.            
             */
 
-  scores[activePlayer] += roundScore;
-  document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
-  roundScore = 0;
+    scores[activePlayer] += roundScore;
+    document.querySelector("#score-" + activePlayer).textContent =
+      scores[activePlayer];
+    roundScore = 0;
 
-  // Check if the player has WON
-  if (scores[activePlayer] >= 20) {
-    document.querySelector("#name-" + activePlayer).textContent = "WINNER!";
-    document.querySelector(".dice").style.display = "none";
-    // Add CSS to winner of player
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
+    var input = document.querySelector(".final-score").value;
 
-    // ONCE there is a winner stop the roll dice button from working -- Have a state variable which will be true if playing else false
-    // document.querySelector(".btn-roll").setAttribute("disabled", true);
-    gamePlaying = false;
-  } else {
-    nextPlayer();
+    if (input) {
+      var winningscore = input;
+    } else {
+      winningscore = 50;
+    }
+
+    // Check if the player has WON
+    if (scores[activePlayer] >= input) {
+      document.querySelector("#name-" + activePlayer).textContent = "WINNER!";
+
+      // For challenge of 2 dices change this also
+      // document.querySelector(".dice").style.display = "none";
+      hideDice();
+      // Add CSS to winner of player
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+
+      // ONCE there is a winner stop the roll dice button from working -- Have a state variable which will be true if playing else false
+      // document.querySelector(".btn-roll").setAttribute("disabled", true);
+      gamePlaying = false;
+    } else {
+      nextPlayer();
+    }
   }
-  }
-  
-  
-  
 });
 
 // document.querySelector(".btn-new").addEventListener("click", function() {
@@ -165,7 +178,7 @@ DICE -> in html is identified using class. For selecting class element we use .d
 and then hide it.
 */
 
-  document.querySelector(".dice").style.display = "none";
+  hideDice();
 
   // We use getElementById, its faster than queryselector as we will be using the score-0,1 and current-0,1 tags
   // Set them to 0
@@ -188,6 +201,16 @@ and then hide it.
   document.querySelector(".player-0-panel").classList.add("active");
 }
 
+function hideDice() {
+  document.getElementById("dice-1").style.display = "none";
+  document.getElementById("dice-2").style.display = "none";
+}
+
+function showDice() {
+  document.getElementById("dice-1").style.display = "block";
+  document.getElementById("dice-2").style.display = "block";
+}
+
 function nextPlayer() {
   // document.querySelector('#current-'+ activePlayer).textContent = roundScore;
   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
@@ -205,5 +228,5 @@ function nextPlayer() {
   // USING TOGGLE
   document.querySelector(".player-0-panel").classList.toggle("active");
   document.querySelector(".player-1-panel").classList.toggle("active");
-  document.querySelector(".dice").style.display = "none";
+  hideDice();
 }
