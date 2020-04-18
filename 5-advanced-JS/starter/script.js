@@ -158,24 +158,65 @@ First class functions are basically objects in JS so we can return them.
 
 */
 
-function interviewQuestions(job) {
-  if (job === "designer") {
-    return function (name) {
-      console.log(
-        name + ", can you please explain what is prototype chain in Javascript?"
-      );
-    };
-  } else if (job === "teacher") {
-    return function (name) {
-      console.log("What subjects do you teach, " + name + "?");
-    };
-  } else {
-    return function (name) {
-      console.log("Hello " + name + ", what do you do?");
-    };
-  }
+// function interviewQuestions(job) {
+//   if (job === "designer") {
+//     return function (name) {
+//       console.log(
+//         name + ", can you please explain what is prototype chain in Javascript?"
+//       );
+//     };
+//   } else if (job === "teacher") {
+//     return function (name) {
+//       console.log("What subjects do you teach, " + name + "?");
+//     };
+//   } else {
+//     return function (name) {
+//       console.log("Hello " + name + ", what do you do?");
+//     };
+//   }
+// }
+
+// var teacherQuestion = interviewQuestions("teacher");
+
+// teacherQuestion("John");
+
+// var designerQuestion = interviewQuestions("designer");
+
+// designerQuestion("John");
+
+// interviewQuestions("designer")("Zutshi");
+
+/*
+
+///////////////// IMMEDIATELY INVOKED FUNCTION EXPRESSIONS(IIFE) /////////////
+
+
+*/
+
+// (function () {
+//   var score = Math.random() * 10;
+//   console.log(score);
+//   console.log(score >= 5);
+// })();
+
+// (function (goodLuck) {
+//   var score = Math.random() * 10;
+//   console.log(score);
+//   console.log(score >= 5 - goodLuck);
+// })(5);
+
+/*
+
+
+//////////////////// CLOSURES ///////////////////////
+
+
+*/
+
+function retirement(retirementAge) {
+  var a = " years left until retirement.";
+  return function (yearOfBirth) {
+    var age = 2016 - yearOfBirth;
+    console.log(retirementAge - age + a);
+  };
 }
-
-var teacherQuestion = interviewQuestions("teacher");
-
-teacherQuestion("John");
