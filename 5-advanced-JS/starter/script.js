@@ -226,3 +226,10 @@ function retirement(retirementAge) {
 var retirementUS = retirement(66);
 
 retirementUS(1996);
+
+var retirementGermany = retirement(65);
+retirementGermany(1996);
+
+var retirementIceland = retirement(67);
+
+retirementIceland(1996);
