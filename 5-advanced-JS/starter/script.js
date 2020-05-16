@@ -210,26 +210,154 @@ First class functions are basically objects in JS so we can return them.
 
 //////////////////// CLOSURES ///////////////////////
 
+So what is closure in javascript?
+"whenever you declare a function inside another function, 
+the inside function(s) is/are recreated again each time 
+the outside function is called"
+
+"Closures are functions that refer to independent (free) variables.
+ In other words, the function defined in the closure 'remembers' 
+ the environment in which it was created."
+
 
 */
 
-function retirement(retirementAge) {
-  var a = " years left until retirement.";
-  return function (yearOfBirth) {
-    var age = 2020 - yearOfBirth;
-    console.log(retirementAge - age + a);
-  };
-}
+// Basic example comparison closure vs non-closure
 
-// SAME AS retirement(66)(1996);
+// Non-closure -> output = 5
+// var addTo = function (passed) {
+//   var inner = 2;
+//   return passed + inner;
+// };
 
-var retirementUS = retirement(66);
+// console.log(addTo(3));
 
-retirementUS(1996);
+// In closure same example :
 
-var retirementGermany = retirement(65);
-retirementGermany(1996);
+// var passed = 3;
+// var addTo = function () {
+//   var inner = 2;
+//   return passed + inner;
+// };
 
-var retirementIceland = retirement(67);
+// console.log(addTo());
 
-retirementIceland(1996);
+// function retirement(retirementAge) {
+//   var a = " years left until retirement.";
+//   return function (yearOfBirth) {
+//     var age = 2020 - yearOfBirth;
+//     console.log(retirementAge - age + a);
+//   };
+// }
+
+// // SAME AS retirement(66)(1996);
+
+// var retirementUS = retirement(66);
+
+// retirementUS(1996);
+
+// var retirementGermany = retirement(65);
+// retirementGermany(1996);
+
+// var retirementIceland = retirement(67);
+
+// retirementIceland(1996);
+
+// Now trying the interview questions example using Closures
+
+// function interviewQuestions(job) {
+//   if (job === "designer") {
+//     return function (name) {
+//       console.log(
+//         name + ", can you please explain what is prototype chain in Javascript?"
+//       );
+//     };
+//   } else if (job === "teacher") {
+//     return function (name) {
+//       console.log("What subjects do you teach, " + name + "?");
+//     };
+//   } else {
+//     return function (name) {
+//       console.log("Hello " + name + ", what do you do?");
+//     };
+//   }
+// }
+
+// var teacherQuestion = interviewQuestions("teacher");
+
+// teacherQuestion("John");
+
+// var designerQuestion = interviewQuestions("designer");
+
+// designerQuestion("John");
+
+// interviewQuestions("designer")("Zutshi");
+
+// USING CLOSURES, WE CAN USE JOB VAR INSIDE NAME FN.
+
+// function interviewQuestions(job) {
+//   return function (name) {
+//     if (job === "designer") {
+//       console.log(
+//         name + ", can you please explain what is prototype chain in Javascript?"
+//       );
+//     } else if (job === "teacher") {
+//       console.log("What subjects do you teach, " + name + "?");
+//     } else {
+//       console.log("Hello " + name + ", what do you do?");
+//     }
+//   };
+// }
+
+// var teacherQuestion = interviewQuestions("teacher");
+
+// teacherQuestion("John");
+
+// var designerQuestion = interviewQuestions("designer");
+
+// designerQuestion("John");
+
+// interviewQuestions("designer")("Zutshi");
+
+/*
+
+/////////////////////// Bind, Call and Apply /////////////////
+
+
+
+*/
+
+var john = {
+  name: "John",
+  age: 25,
+  presentation: function (style, timeOfDay) {
+    if (style === "formal") {
+      // console.log(
+      //   "Hi all, I'm " +
+      //     this.name +
+      //     " and my age is " +
+      //     this.age +
+      //     " and the time of the day is: " +
+      //     timeOfDay
+      // );
+
+      console.log(
+        `Hi all, I'm ${this.name} and my age is ${this.age} and the time of day is ${timeOfDay} Me likey!!`
+      );
+    }
+  },
+};
+
+john.presentation("formal", "morning");
+
+var emily = {
+  name: "Emily",
+  age: 22,
+};
+
+// We can use the presentation fn of john for emily
+john.presentation.call(emily, "formal", "morning");
+
+// Another way for method borrowing but wont work as the function
+// dosent expect array as input
+john.presentation.apply(emily, ["friendly", "afternoon"]);
